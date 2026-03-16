@@ -16,7 +16,7 @@ export interface Appliance {
 const initialAppliances: Appliance[] = [
   {
     name: "Bulb",
-    power: "60",
+    power: "10",
     quantity: "0",
     hrs: "0",
     isSelected: false,
@@ -39,13 +39,17 @@ const initialAppliances: Appliance[] = [
     isEditable: false,
   },
   {
-    name: "LCD/LED TV (<42')",
+    name: "LCD/LED TV <42'",
     power: "150",
     quantity: "0",
     hrs: "0",
     isSelected: false,
     isEditable: false,
-    variation: [{ type: "LCD/LED TV (>42')", power: "200" }],
+
+    variation: [
+      { type: "LCD/LED TV <42'", power: "150" },
+      { type: "LCD/LED TV >42'", power: "200" },
+    ],
   },
   {
     name: "Laptop",
@@ -75,30 +79,12 @@ const initialAppliances: Appliance[] = [
     hrs: "0",
     isSelected: false,
     isEditable: false,
-  },
-  {
-    name: "Refrigerator (250-350Ltr)",
-    power: "210",
-    quantity: "0",
-    hrs: "0",
-    isSelected: false,
-    isEditable: false,
-  },
-  {
-    name: "Refrigerator (350-450Ltr)",
-    power: "320",
-    quantity: "0",
-    hrs: "0",
-    isSelected: false,
-    isEditable: false,
-  },
-  {
-    name: "Refrigerator (>450Ltr)",
-    power: "460",
-    quantity: "0",
-    hrs: "0",
-    isSelected: false,
-    isEditable: false,
+    variation: [
+      { type: "Refrigerator (165-250Ltr)", power: "150" },
+      { type: "Refrigerator (250-350Ltr)", power: "210" },
+      { type: "Refrigerator (350-450Ltr)", power: "320" },
+      { type: "Refrigerator (>450Ltr)", power: "460" },
+    ],
   },
 ];
 
