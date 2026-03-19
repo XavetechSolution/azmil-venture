@@ -1,62 +1,9 @@
-import { useState } from "react";
-
-import initialAppliances, { Appliance } from "@/constants/initialAppliances";
+import useAppContext from "@/src/hooks/useAppContext";
 
 function EnergyCalculatorGrid() {
-  const [appliances, setAppliances] = useState<Appliance[]>([
-    ...initialAppliances,
-  ]);
+  const { state, dispatch } = useAppContext();
+  const { appliances } = state;
 
-  const totalWatt = appliances.reduce(
-    (prev, curr) => prev + Number(curr.power) * Number(curr.quantity),
-    0,
-  );
-  const kva = totalWatt / (1000 * 0.9);
-  console.log(kva);
-
-  const setAppliancePower = (id: number, power: string | number) => {
-    if (Number(power) < 0) return;
-
-    setAppliances((state) => {
-      const newState = [...state];
-      newState[id].power = !Number(power) ? "0" : Number(power).toString();
-      return newState;
-    });
-  };
-
-  const setApplianceName = (id: number, name: string) =>
-    setAppliances((state) => {
-      const newState = [...state];
-      newState[id].name = name;
-      return newState;
-    });
-
-  const setApplianceQuantity = (id: number, quantity: string | number) => {
-    if (Number(quantity) > 99 || Number(quantity || !Number(quantity)) < 0)
-      return;
-
-    setAppliances((state) => {
-      const newState = [...state];
-      newState[id].quantity = quantity.toString();
-      return newState;
-    });
-  };
-
-  const setApplianceVariation = (id: number, type: string) => {
-    setAppliances((state) => {
-      const newState = [...state];
-
-      const appliance = newState[id];
-      const variation = appliance.variation?.find((v) => v.type === type);
-
-      if (variation) {
-        appliance.name = variation.type;
-        appliance.power = variation.power;
-      }
-
-      return newState;
-    });
-  };
   return (
     <div className="flex justify-center items-center p-6">
       <div className="w-full max-w-3xl bg-white shadow-xl rounded-2xl p-8">
@@ -79,14 +26,22 @@ function EnergyCalculatorGrid() {
                   <input
                     type="text"
                     value={appliance.name}
-                    onChange={(e) => setApplianceName(index, e.target.value)}
+                    onChange={(e) =>
+                      dispatch({
+                        type: "SET_APPLIANCE_NAME",
+                        payload: { id: index, name: e.target.value },
+                      })
+                    }
                     className="w-full border border-zinc-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                   />
                 ) : appliance?.variation ? (
                   <select
                     value={appliance.name}
                     onChange={(e) =>
-                      setApplianceVariation(index, e.target.value)
+                      dispatch({
+                        type: "SET_APPLIANCE_VARIATION",
+                        payload: { id: index, type: e.target.value },
+                      })
                     }
                     className="w-full font-semibold rounded-lg p-2 text-sm border-zinc-300 focus:ring-2 focus:ring-blue-500 outline-none"
                   >
@@ -110,7 +65,12 @@ function EnergyCalculatorGrid() {
                 value={
                   Number(appliance.quantity) <= 0 ? "" : appliance.quantity
                 }
-                onChange={(e) => setApplianceQuantity(index, e.target.value)}
+                onChange={(e) =>
+                  dispatch({
+                    type: "SET_APPLIANCE_QUANTITY",
+                    payload: { id: index, quantity: e.target.value },
+                  })
+                }
                 className="border border-zinc-300 font-semibold rounded-lg p-2 placeholder:text-zinc-400 focus:ring-2 focus:ring-blue-500 outline-none"
               />
 
@@ -120,7 +80,12 @@ function EnergyCalculatorGrid() {
                   type="number"
                   placeholder="Power (W)"
                   value={appliance.power}
-                  onChange={(e) => setAppliancePower(index, e.target.value)}
+                  onChange={(e) =>
+                    dispatch({
+                      type: "SET_APPLIANCE_POWER",
+                      payload: { id: index, power: e.target.value },
+                    })
+                  }
                   className="border border-zinc-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                 />
               ) : (

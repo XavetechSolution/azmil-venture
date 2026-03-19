@@ -1,5 +1,6 @@
 "use client";
 
+import EnergyCalculatorFAQ from "@/src/components/EnergyCalculatorFAQ";
 import EnergyCalculatorGrid from "@/src/components/EnergyCalculatorGrid";
 import EnergyCalculatorHero from "@/src/components/EnergyCalculatorHero";
 import RecommendedSystemGrid from "@/src/components/RecommendedSystemGrid";
@@ -10,6 +11,7 @@ export default function EnergyCalculatorScreen() {
       <EnergyCalculatorHero />
       <EnergyCalculatorGrid />
       <RecommendedSystemGrid />
+      <EnergyCalculatorFAQ />
     </div>
   );
 }
