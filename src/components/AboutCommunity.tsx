@@ -1,19 +1,17 @@
 "use client";
 
+import Image from "next/image";
+
 export default function AboutCommunity() {
   return (
     <section className="relative w-full h-[70vh] md:h-[80vh] overflow-hidden">
-      {/* BACKGROUND IMAGE */}
-      <img
+      <Image
         src="/about-community.jpg"
         alt="People together"
-        className="absolute inset-0 w-full h-full object-cover"
+        fill
+        className="object-cover"
       />
-
-      {/* DARK OVERLAY */}
       <div className="absolute inset-0 bg-black/40" />
-
-      {/* CONTENT */}
       <div className="relative z-10 flex items-center justify-center h-full px-6 text-center">
         <div className="max-w-3xl text-white">
           <h2 className="text-3xl md:text-5xl font-semibold tracking-tight leading-tight">
