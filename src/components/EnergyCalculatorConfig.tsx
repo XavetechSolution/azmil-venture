@@ -7,7 +7,14 @@ import { useState } from "react";
 function EnergyCalculatorConfig() {
   const { state, dispatch } = useAppContext();
 
-  const [errors, setErrors] = useState<any>({});
+  interface ErrorState {
+    name?: string;
+    email?: string;
+    systemType?: string;
+    dailyUsage?: string;
+  }
+
+  const [errors, setErrors] = useState<ErrorState>({});
 
   const validateField = (field: string, value: string) => {
     let message = "";
@@ -35,7 +42,7 @@ function EnergyCalculatorConfig() {
         break;
     }
 
-    setErrors((prev: any) => ({
+    setErrors((prev) => ({
       ...prev,
       [field]: message,
     }));
@@ -181,8 +188,8 @@ function EnergyCalculatorConfig() {
             />
           </div>
           <p className="text-xs text-zinc-500 mt-1">Average daily usage time</p>
-          {errors.hours && (
-            <p className="text-red-500 text-xs">{errors.hours}</p>
+          {errors.dailyUsage && (
+            <p className="text-red-500 text-xs">{errors.dailyUsage}</p>
           )}
         </div>
       </div>

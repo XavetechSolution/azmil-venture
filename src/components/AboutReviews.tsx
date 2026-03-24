@@ -13,7 +13,11 @@ export default function AboutReviews() {
 
         {/* REVIEWS GRID */}
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 my-4">
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
+          <div
+            data-scroll-reveal
+            animate-on-scroll
+            className="bg-white rounded-2xl p-6 shadow-sm"
+          >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-zinc-200" />
               <div>
@@ -31,7 +35,11 @@ export default function AboutReviews() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
+          <div
+            data-scroll-reveal
+            animate-on-scroll
+            className="bg-white rounded-2xl p-6 shadow-sm"
+          >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-zinc-200" />
               <div>
@@ -49,7 +57,11 @@ export default function AboutReviews() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
+          <div
+            data-scroll-reveal
+            animate-on-scroll
+            className="bg-white rounded-2xl p-6 shadow-sm"
+          >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-zinc-200" />
               <div>

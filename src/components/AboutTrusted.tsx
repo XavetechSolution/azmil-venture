@@ -1,7 +1,7 @@
 "use client";
 
+import { COMPANIES } from "@/src/constants/systemConfigs";
 import Image from "next/image";
-import { COMPANIES } from "../constants/systemConfigs";
 
 export default function AboutTrusted() {
   return (
@@ -16,6 +16,8 @@ export default function AboutTrusted() {
         <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-10 place-items-center">
           {COMPANIES.map((company, index) => (
             <div
+              data-scroll-reveal
+              animate-on-scroll
               key={index}
               className="flex items-center justify-center opacity-70 hover:opacity-100 transition"
             >

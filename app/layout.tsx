@@ -1,3 +1,4 @@
+import Footer from "@/src/components/Footer";
 import Header from "@/src/components/Header";
 import { AppProvider } from "@/src/store/AppProvider";
 import type { Metadata } from "next";
@@ -31,8 +32,8 @@ export default function RootLayout({
       >
         <AppProvider>
           <Header />
-
           {children}
+          <Footer />
         </AppProvider>
       </body>
     </html>
