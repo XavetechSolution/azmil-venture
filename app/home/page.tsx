@@ -140,6 +140,7 @@ export default function Home() {
       </section>
 
       {/* Services Overview */}
+      {/* Products Section */}
       <section className="py-20 px-4 md:px-16">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
@@ -150,9 +151,11 @@ export default function Home() {
               Everything you need for reliable power under one roof
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Solar Panels */}
             <Link href="/products?category=panels" className="group">
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 text-center group-hover:-translate-y-2">
+              <div className="h-full flex flex-col bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 text-center group-hover:-translate-y-2">
                 <Image
                   src="/solar-panel-5.jpg"
                   alt="Solar Panels"
@@ -163,16 +166,18 @@ export default function Home() {
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">
                   Solar Panels
                 </h3>
-                <p className="text-gray-600 mb-6">
+                <p className="text-gray-600 mb-6 flex-grow">
                   High-efficiency panels for maximum energy harvest
                 </p>
-                <span className="text-green-600 font-bold text-xl">
+                <span className="text-green-600 font-bold text-xl mt-auto">
                   Shop Panels →
                 </span>
               </div>
             </Link>
+
+            {/* Inverters */}
             <Link href="/products?category=inverters" className="group">
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 text-center group-hover:-translate-y-2">
+              <div className="h-full flex flex-col bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 text-center group-hover:-translate-y-2">
                 <Image
                   src="/solar-inverter.jpg"
                   alt="Inverters"
@@ -183,16 +188,18 @@ export default function Home() {
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">
                   Inverters
                 </h3>
-                <p className="text-gray-600 mb-6">
+                <p className="text-gray-600 mb-6 flex-grow">
                   Pure sine wave inverters for all appliances
                 </p>
-                <span className="text-green-600 font-bold text-xl">
+                <span className="text-green-600 font-bold text-xl mt-auto">
                   Shop Inverters →
                 </span>
               </div>
             </Link>
+
+            {/* Batteries */}
             <Link href="/products?category=batteries" className="group">
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 text-center group-hover:-translate-y-2">
+              <div className="h-full flex flex-col bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 text-center group-hover:-translate-y-2">
                 <Image
                   src="/solar-battery-1.jpg"
                   alt="Batteries"
@@ -203,16 +210,18 @@ export default function Home() {
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">
                   Batteries
                 </h3>
-                <p className="text-gray-600 mb-6">
+                <p className="text-gray-600 mb-6 flex-grow">
                   Lithium & tubular for 24/7 backup
                 </p>
-                <span className="text-green-600 font-bold text-xl">
+                <span className="text-green-600 font-bold text-xl mt-auto">
                   Shop Batteries →
                 </span>
               </div>
             </Link>
+
+            {/* Packages */}
             <Link href="/products?category=packages" className="group">
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 text-center group-hover:-translate-y-2">
+              <div className="h-full flex flex-col bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 text-center group-hover:-translate-y-2">
                 <Image
                   src="/solar-inverter-4.jpg"
                   alt="Packages"
@@ -223,10 +232,10 @@ export default function Home() {
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">
                   Full Packages
                 </h3>
-                <p className="text-gray-600 mb-6">
+                <p className="text-gray-600 mb-6 flex-grow">
                   Complete ready-to-install systems
                 </p>
-                <span className="text-green-600 font-bold text-xl">
+                <span className="text-green-600 font-bold text-xl mt-auto">
                   View Packages →
                 </span>
               </div>
@@ -237,7 +246,7 @@ export default function Home() {
 
       {/* How It Works */}
       <section className="bg-gray-50 py-20 px-4 md:px-16">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               How We Work
@@ -246,37 +255,43 @@ export default function Home() {
               From consultation to lights on in 7 days
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-12 items-center">
-            <div className="text-center md:text-left">
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-12">
+            {/* Step 1 */}
+            <div className="text-center md:text-left flex flex-col h-full">
               <div className="w-20 h-20 bg-blue-500 text-white rounded-2xl flex items-center justify-center mx-auto md:mx-0 mb-6 text-2xl font-bold">
                 1
               </div>
               <h3 className="text-2xl font-bold mb-4 text-pink-500">
                 Free Consultation
               </h3>
-              <p className="text-lg text-gray-600 leading-relaxed">
+              <p className="text-lg text-gray-600 leading-relaxed flex-grow">
                 Site survey & custom design. WhatsApp or visit our Ogba office.
               </p>
             </div>
-            <div className="text-center md:text-left">
+
+            {/* Step 2 */}
+            <div className="text-center md:text-left flex flex-col h-full">
               <div className="w-20 h-20 bg-green-500 text-white rounded-2xl flex items-center justify-center mx-auto md:mx-0 mb-6 text-2xl font-bold">
                 2
               </div>
               <h3 className="text-2xl font-bold mb-4 text-pink-500">
                 Installation
               </h3>
-              <p className="text-lg text-gray-600 leading-relaxed">
-                Professional team installs in 2-3 days. Minimal disruption.
+              <p className="text-lg text-gray-600 leading-relaxed flex-grow">
+                Professional team installs in 2–3 days. Minimal disruption.
               </p>
             </div>
-            <div className="text-center md:text-left">
+
+            {/* Step 3 */}
+            <div className="text-center md:text-left flex flex-col h-full">
               <div className="w-20 h-20 bg-purple-500 text-white rounded-2xl flex items-center justify-center mx-auto md:mx-0 mb-6 text-2xl font-bold">
                 3
               </div>
               <h3 className="text-2xl font-bold mb-4 text-pink-500">
                 Power On
               </h3>
-              <p className="text-lg text-gray-600 leading-relaxed">
+              <p className="text-lg text-gray-600 leading-relaxed flex-grow">
                 Full training & 24/7 support. Enjoy reliable power forever.
               </p>
             </div>
