@@ -15,7 +15,7 @@ export default function AboutReviews() {
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 my-4">
           <div
             data-scroll-reveal
-            animate-on-scroll
+            animate-on-scroll={"true"}
             className="bg-white rounded-2xl p-6 shadow-sm"
           >
             <div className="flex items-center gap-3">
@@ -37,7 +37,7 @@ export default function AboutReviews() {
 
           <div
             data-scroll-reveal
-            animate-on-scroll
+            animate-on-scroll={"true"}
             className="bg-white rounded-2xl p-6 shadow-sm"
           >
             <div className="flex items-center gap-3">
@@ -59,7 +59,7 @@ export default function AboutReviews() {
 
           <div
             data-scroll-reveal
-            animate-on-scroll
+            animate-on-scroll={"true"}
             className="bg-white rounded-2xl p-6 shadow-sm"
           >
             <div className="flex items-center gap-3">

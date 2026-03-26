@@ -17,7 +17,7 @@ export default function AboutTrusted() {
           {COMPANIES.map((company, index) => (
             <div
               data-scroll-reveal
-              animate-on-scroll
+              animate-on-scroll={"true"}
               key={index}
               className="flex items-center justify-center opacity-70 hover:opacity-100 transition"
             >
