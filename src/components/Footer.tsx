@@ -81,30 +81,6 @@ export default function Footer() {
                   Calculator
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/portfolio"
-                  className="text-gray-400 hover:text-white transition"
-                >
-                  Portfolio
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/reviews"
-                  className="text-gray-400 hover:text-white transition"
-                >
-                  Reviews
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="text-gray-400 hover:text-white transition"
-                >
-                  Contact
-                </Link>
-              </li>
             </ul>
           </div>
 
