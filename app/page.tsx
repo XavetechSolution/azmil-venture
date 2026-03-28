@@ -1,4 +1,3 @@
-import AboutReviews from "@/src/components/AboutReviews";
 import AboutTrusted from "@/src/components/AboutTrusted";
 import HomeCalculatorSection from "@/src/components/HomeCalculatorSection";
 import HomeCTASection from "@/src/components/HomeCTASection";
@@ -32,7 +31,6 @@ export default function Home() {
       <HomeHowItWorks />
       <HomeCalculatorSection />
       <HomePortfolioSection />
-      <AboutReviews />
       <AboutTrusted />
       <HomeCTASection />
     </main>
