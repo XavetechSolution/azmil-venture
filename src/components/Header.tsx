@@ -92,10 +92,7 @@ function Header() {
         </div>
 
         <nav className="flex flex-col space-y-6 px-6 text-lg font-semibold">
-          <Link
-            href="/home"
-            onClick={() => dispatch({ type: "CLOSE_NAV_BAR" })}
-          >
+          <Link href="/" onClick={() => dispatch({ type: "CLOSE_NAV_BAR" })}>
             Home
           </Link>
           <Link

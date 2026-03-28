@@ -65,7 +65,7 @@ Estimated Requirements 📝:
 
 Config ⚙:
 - System Type: ${state.config.systemType === "ongrid" ? "On-Grid" : "Off-Grid"}
-- Battery Type: ${state.config.batteryType === "lithium" ? state.config.batteryType + "Battery" : state.config.batteryType + "Cell"}
+- Battery Type: ${state.config.batteryType === "lithium" ? state.config.batteryType + " Battery" : state.config.batteryType + " Cell"}
 - Daily Usage: ${state.config.dailyUsage} hr(s)
 
 Please provide a formal quote. Thank you.

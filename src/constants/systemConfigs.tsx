@@ -1,5 +1,3 @@
-// src/constants/solarConstants.ts
-
 export const POWER_FACTOR = 0.8;
 
 export const BATTERY_MAPPING: Record<number, number> = {
@@ -35,10 +33,10 @@ export const VA_STEPS = [
 ];
 
 export const COMPANIES = [
-  { name: "amaron quanta", logo: "/amaronquanta-no-bg.png" },
-  { name: "deye", logo: "/deye-removebg-preview.png" },
-  { name: "cworth energy", logo: "/cworthenergy-no-bg.png" },
-  { name: "felicity solar", logo: "/felicitysolar-no-bg.png" },
-  { name: "itel", logo: "/itel-removebg-preview.png" },
-  { name: "gospower", logo: "/gospower-no-bg.png" },
+  { name: "amaron quanta", logo: "/partners/amaronquanta-no-bg.png" },
+  { name: "deye", logo: "/partners/deye-removebg-preview.png" },
+  { name: "cworth energy", logo: "/partners/cworthenergy-no-bg.png" },
+  { name: "felicity solar", logo: "/partners/felicitysolar-no-bg.png" },
+  { name: "itel", logo: "/partners/itel-removebg-preview.png" },
+  { name: "gospower", logo: "/partners/gospower-no-bg.png" },
 ];

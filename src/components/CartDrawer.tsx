@@ -23,14 +23,30 @@ export default function CartDrawer({
     0,
   );
 
-  const whatsappMessage = `Hi AZMIL,\\n\\nMy Cart Order:\\n${cart
-    .map(
-      (item) =>
-        `- ${item.product.name} x${item.qty} (₦${formatPrice(item.product.price)})`,
-    )
-    .join(
-      "\\n",
-    )}\\n\\nTotal: ${formatPrice(total)}\\n\\nPlease send quote/installation details.\\nThanks!`;
+  const whatsappMessage = `Hello AZMIL,
+
+🛒 *NEW ORDER REQUEST*
+
+${cart
+  .map(
+    (item, index) =>
+      `${index + 1}. *${item.product.name}*
+   - Qty: ${item.qty}
+   - Price: ${formatPrice(item.product.price)}
+   - Subtotal: ${formatPrice(item.product.price * item.qty)}`,
+  )
+  .join("\n\n")}
+
+----------------------------
+*TOTAL: ${formatPrice(total)}*
+----------------------------
+
+Kindly provide:
+• Quote
+• Installation details
+• Delivery timeline
+
+Thank you!`;
 
   const handleQtyChange = (id: number, qty: number) => {
     const newCart = cart.map((item) =>
@@ -46,7 +62,10 @@ export default function CartDrawer({
 
   if (cart.length === 0) {
     return (
-      <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+      <div
+        className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+        onClick={() => setCartOpen(false)}
+      >
         <div className="bg-white w-full max-w-md rounded-2xl p-8 text-center">
           <h3 className="text-2xl font-bold text-gray-900 mb-4">
             Your Cart is Empty
