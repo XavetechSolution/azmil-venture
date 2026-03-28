@@ -65,7 +65,7 @@ export default function ProductsClient() {
         </Suspense>
 
         {/* CATEGORY BAR */}
-        <div className="bg-white border-b sticky top-[90px] z-40 shadow-sm">
+        <div className="bg-white border-b sticky top-[80px] z-40 shadow-sm">
           <div className="max-w-7xl mx-auto px-4 md:px-10 lg:px-16">
             <div className="flex items-center justify-between gap-4 py-4">
               <div className="flex gap-2 overflow-x-auto no-scrollbar">
