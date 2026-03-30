@@ -1,0 +1,158 @@
+export interface Product {
+  id: number;
+  name: string;
+  category: string;
+  image: string;
+  description: string;
+  specs: string[];
+  price: number;
+}
+
+const PRODUCTS: Product[] = [
+  {
+    id: 1,
+    name: "Felicity Solar 550W Mono Panel",
+    category: "panels",
+    image: "/solar-panel-5.jpg",
+    description: "High-efficiency monocrystalline panel. Perfect for rooftops.",
+    specs: ["550W output", "25yr warranty", "IP68 weatherproof"],
+    price: 145000,
+  },
+  {
+    id: 2,
+    name: "Deye 5kW Hybrid Inverter",
+    category: "inverters",
+    image: "/solar-inverter.jpg",
+    description: "Pure sine wave hybrid inverter for off-grid & grid-tie.",
+    specs: ["5kW power", "48V battery", "WiFi monitoring"],
+    price: 1250000,
+  },
+  {
+    id: 3,
+    name: "Amaron 5kWh Lithium Battery",
+    category: "batteries",
+    image: "/solar-battery-1.jpg",
+    description: "LiFePO4 lithium battery with 6000+ cycles.",
+    specs: ["5kWh capacity", "10yr warranty", "BMS included"],
+    price: 850000,
+  },
+  {
+    id: 4,
+    name: "2kW Starter Home Package",
+    category: "packages",
+    image: "/solar-inverter-2.jpg",
+    description: "Complete system for small homes/apartments.",
+    specs: ["4x550W panels", "2kW inverter", "3kWh battery"],
+    price: 2500000,
+  },
+  {
+    id: 5,
+    name: "Gospower 300W Panel",
+    category: "panels",
+    image: "/solar-panel-6.jpg",
+    description: "Compact panel for portable systems.",
+    specs: ["300W", "Foldable", "Lightweight"],
+    price: 85000,
+  },
+  {
+    id: 6,
+    name: "Cworth 3kW Inverter",
+    category: "inverters",
+    image: "/lekkivilla-2.jpg",
+    description: "Reliable pure sine wave inverter.",
+    specs: ["3kW continuous", "48V", "Remote monitoring"],
+    price: 750000,
+  },
+  {
+    id: 7,
+    name: "Tubular 200AH Battery",
+    category: "batteries",
+    image: "/solar-battery-1.jpg",
+    description: "Heavy-duty tubular for deep cycle.",
+    specs: ["200AH @ 48V", "5yr warranty", "Maintenance free"],
+    price: 320000,
+  },
+  {
+    id: 8,
+    name: "5kW Off-Grid Package",
+    category: "packages",
+    image: "/solar-inverter-3.jpg",
+    description: "Full off-grid system for average homes.",
+    specs: ["8x550W panels", "5kW inverter", "10kWh battery"],
+    price: 5800000,
+  },
+  {
+    id: 9,
+    name: "Itel 440W Bifacial Panel",
+    category: "panels",
+    image: "/solar-panel-7.jpg",
+    description: "Bifacial panels capture light from both sides.",
+    specs: ["440W + 25% rear", "30yr lifespan", "Anti-PID"],
+    price: 125000,
+  },
+  {
+    id: 10,
+    name: "Felicity 8kW Inverter",
+    category: "inverters",
+    image: "/ikejaimg-1.jpg",
+    description: "High capacity for commercial use.",
+    specs: ["8kW", "Parallel up to 16", "MPPT charger"],
+    price: 2100000,
+  },
+  {
+    id: 11,
+    name: "12kWh Lithium Rack Battery",
+    category: "batteries",
+    image: "/solar-battery-1.jpg",
+    description: "Rack-mount for easy installation.",
+    specs: ["12kWh", "Modular", "6000 cycles"],
+    price: 1850000,
+  },
+  {
+    id: 12,
+    name: "10kW Commercial Package",
+    category: "packages",
+    image: "/solar-inverter-4.jpg",
+    description: "Large system for offices/small factories.",
+    specs: ["20x550W panels", "10kW inverter", "20kWh storage"],
+    price: 12500000,
+  },
+  {
+    id: 13,
+    name: "Tubular 200AH Battery",
+    category: "batteries",
+    image: "/solar-battery-1.jpg",
+    description: "Heavy-duty tubular for deep cycle.",
+    specs: ["200AH @ 48V", "5yr warranty", "Maintenance free"],
+    price: 320000,
+  },
+  {
+    id: 14,
+    name: "Tubular 200AH Battery",
+    category: "batteries",
+    image: "/solar-battery-1.jpg",
+    description: "Heavy-duty tubular for deep cycle.",
+    specs: ["200AH @ 48V", "5yr warranty", "Maintenance free"],
+    price: 320000,
+  },
+  {
+    id: 15,
+    name: "Tubular 200AH Battery",
+    category: "batteries",
+    image: "/solar-battery-1.jpg",
+    description: "Heavy-duty tubular for deep cycle.",
+    specs: ["200AH @ 48V", "5yr warranty", "Maintenance free"],
+    price: 320000,
+  },
+  {
+    id: 16,
+    name: "Tubular 200AH Battery",
+    category: "batteries",
+    image: "/solar-battery-1.jpg",
+    description: "Heavy-duty tubular for deep cycle.",
+    specs: ["200AH @ 48V", "5yr warranty", "Maintenance free"],
+    price: 320000,
+  },
+];
+
+export default PRODUCTS;
