@@ -17,9 +17,9 @@ import {
 } from "../constants/systemConfigs";
 
 import {
-  estimateBatteryCost,
   estimateInverterCost,
   estimateVA,
+  findBestBatteryCombination,
 } from "../utils/estimate";
 
 import { useState } from "react";
@@ -29,28 +29,6 @@ function RecommendedSystemGrid() {
   const { state } = useAppContext();
   const [showBreakdown, setShowBreakdown] = useState(false);
 
-  const groupItems = <T extends { price: number }>(
-    items: T[],
-    key: (item: T) => string,
-  ) => {
-    const map = new Map<
-      string,
-      { item: T; count: number; totalPrice: number }
-    >();
-
-    items.forEach((item) => {
-      const k = key(item);
-      if (!map.has(k)) {
-        map.set(k, { item, count: 1, totalPrice: item.price });
-      } else {
-        const existing = map.get(k)!;
-        existing.count += 1;
-        existing.totalPrice += item.price;
-      }
-    });
-
-    return Array.from(map.values());
-  };
   const va =
     state.config.systemType === "offgrid"
       ? (state.energy.totalWatt / POWER_FACTOR) * 2
@@ -68,52 +46,22 @@ function RecommendedSystemGrid() {
     wattHour / (BATTERY.lithium.dod * BATTERY.lithium.efficiency);
 
   const recommendedInverters = estimateInverterCost(va);
-  const recommendedBatteries = estimateBatteryCost(batterySize);
-
-  // totals
-  const totalInverterCost = recommendedInverters.reduce(
-    (sum, item) => sum + item.price,
-    0,
-  );
-
-  const totalBatteryCost = recommendedBatteries.reduce(
-    (sum, item) => sum + item.price,
-    0,
-  );
+  const recommendedBatteries = findBestBatteryCombination(batterySize);
 
   // helpers
   const formatVA = (va: number) => (va >= 1000 ? `${va / 1000}KVA` : `${va}VA`);
 
   const formatWH = (wh: number) => (wh >= 1000 ? `${wh / 1000}KWh` : `${wh}Wh`);
 
-  // display strings
-  const groupedInverters = groupItems(
-    recommendedInverters,
-    (i) => `${i.va}-${i.volt}`,
-  );
+  // display format
+  const inverterDisplay = isAboveRange
+    ? `${VA_STEPS[VA_STEPS.length - 1] / 1000}KVA+`
+    : inverterVA >= 1000
+      ? `${inverterVA / 1000}KVA`
+      : `${inverterVA}VA`;
 
-  const groupedBatteries = groupItems(
-    recommendedBatteries,
-    (b) => `${b.wh}-${b.volt}`,
-  );
-
-  const inverterDisplay = groupedInverters
-    .map(
-      ({ item, count }) =>
-        `${count > 1 ? `${count} × ` : ""}${formatVA(item.va)}`,
-    )
-    .join(" + ");
-
-  const batteryDisplay = groupedBatteries
-    .map(
-      ({ item, count }) =>
-        `${count > 1 ? `${count} × ` : ""}${formatWH(item.wh)}`,
-    )
-    .join(" + ");
-
-  const batteryVoltDisplay = [
-    ...new Set(recommendedBatteries.map((b) => b.volt)),
-  ].join("/");
+  // Price
+  const solarPrice = 150000 * (VA_TO_PANNEL_QTY[inverterVA] ?? 0);
 
   const appliancesList = state.appliances?.length
     ? state.appliances
@@ -135,9 +83,9 @@ Appliances ⚡:
 ${appliancesList}
 
 Estimated Requirements 📝:
-- Inverter(s): ${inverterDisplay}
+- Inverter(s): ${formatVA(recommendedInverters.wh)}
 - Solar Panels: ${VA_TO_PANNEL_QTY[inverterVA] ?? 0}
-- Battery Bank: ${batteryDisplay}
+- Battery Bank: ${`${recommendedBatteries.batteryWh} ( x${recommendedBatteries.count})`}
 - Daily Energy: ${KWhDisplay}
 
 Config ⚙:
@@ -188,9 +136,14 @@ Please provide a formal quote. Thank you.
         {/* Battery */}
         <div className="bg-zinc-50 rounded-xl p-5 text-center shadow-sm hover:shadow-lg transition">
           <Battery className="mx-auto text-green-500 mb-2" size={28} />
-          <p className="text-2xl font-bold text-zinc-800">{batteryDisplay}</p>
+          <p className="text-2xl font-bold text-zinc-800">
+            {formatWH(recommendedBatteries.batteryWh)}
+          </p>
           <p className="text-sm text-zinc-500">
-            Battery ({batteryVoltDisplay}V)
+            Battery
+            {recommendedBatteries.count > 1
+              ? ` (x${recommendedBatteries.count})`
+              : ""}
           </p>
         </div>
 
@@ -211,7 +164,11 @@ Please provide a formal quote. Thank you.
         <p className="text-sm text-white/80">Estimated System Cost</p>
 
         <p className="text-3xl font-bold text-white mt-1">
-          {formatNaira(totalBatteryCost + totalInverterCost)}
+          {formatNaira(
+            recommendedBatteries.totalPrice +
+              recommendedInverters.price +
+              solarPrice,
+          )}
         </p>
       </div>
 
@@ -246,36 +203,37 @@ Please provide a formal quote. Thank you.
             <div className="bg-white rounded-xl p-5 shadow-sm border border-zinc-100">
               <div className="space-y-3 text-sm text-zinc-700">
                 {/* Inverters */}
-                {groupedInverters.map(({ item, count, totalPrice }, idx) => (
-                  <div key={idx} className="flex justify-between">
-                    <span>
-                      Inverter ({count > 1 ? `${count} × ` : ""}
-                      {formatVA(item.va)})
-                    </span>
-                    <span>{formatNaira(totalPrice)}</span>
-                  </div>
-                ))}
-
-                {/* Batteries */}
-                {groupedBatteries.map(({ item, count, totalPrice }, idx) => (
-                  <div key={idx} className="flex justify-between">
-                    <span>
-                      Battery (Lithium {count > 1 ? `${count} × ` : ""}
-                      {formatWH(item.wh)} - {item.volt}V)
-                    </span>
-                    <span>{formatNaira(totalPrice)}</span>
-                  </div>
-                ))}
 
                 <div className="flex justify-between">
-                  <span>Solar Panels</span>
-                  <span>{formatNaira(0)}</span>
+                  <span>Inverter ({formatVA(recommendedInverters.wh)})</span>
+                  <span>{formatNaira(recommendedInverters.price)}</span>
+                </div>
+
+                {/* Batteries */}
+                <div className="flex justify-between">
+                  <span>
+                    Battery (Lithium {formatWH(recommendedBatteries.batteryWh)})
+                    {recommendedBatteries.count > 1
+                      ? ` (x${recommendedBatteries.count})`
+                      : ""}
+                  </span>
+                  <span>{formatNaira(recommendedBatteries.totalPrice)}</span>
+                </div>
+
+                <div className="flex justify-between">
+                  <span>
+                    Solar Panels {`(x${VA_TO_PANNEL_QTY[inverterVA] ?? 0})`}
+                  </span>
+                  <span>{formatNaira(solarPrice)}</span>
                 </div>
 
                 <div className="border-t pt-3 flex justify-between font-semibold text-zinc-800">
                   <span>Total</span>
                   <span>
-                    {formatNaira(totalBatteryCost + totalInverterCost)}
+                    {formatNaira(
+                      recommendedBatteries.totalPrice +
+                        recommendedInverters.price,
+                    )}
                   </span>
                 </div>
               </div>
