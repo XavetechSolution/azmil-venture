@@ -86,7 +86,7 @@ function RecommendedSystemGrid() {
           </p>
           <p className="text-sm text-zinc-500">
             Inverter{" "}
-            {recommendedInverters.va > 1
+            {recommendedInverters.count > 1
               ? ` (x${recommendedInverters.count})`
               : ""}
           </p>
