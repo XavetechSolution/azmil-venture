@@ -61,7 +61,11 @@ const appReducer = (state: AppState, action: Action): AppState => {
         power: (!value ? 0 : value).toString(),
       }));
 
-      return { ...state, appliances };
+      return {
+        ...state,
+        appliances,
+        energy: { totalWatt: calculateTotalWatt(appliances) },
+      };
     }
 
     case "SET_APPLIANCE_NAME": {
@@ -72,7 +76,11 @@ const appReducer = (state: AppState, action: Action): AppState => {
         name: name || "",
       }));
 
-      return { ...state, appliances };
+      return {
+        ...state,
+        appliances,
+        energy: { totalWatt: calculateTotalWatt(appliances) },
+      };
     }
 
     case "SET_APPLIANCE_QUANTITY": {
@@ -107,7 +115,11 @@ const appReducer = (state: AppState, action: Action): AppState => {
         };
       });
 
-      return { ...state, appliances };
+      return {
+        ...state,
+        appliances,
+        energy: { totalWatt: calculateTotalWatt(appliances) },
+      };
     }
 
     case "OPEN_NAV_BAR":

@@ -1,7 +1,7 @@
 import { Product } from "@/src/constants/products";
-import { formatPrice } from "@/src/utils/formatPrice";
 import Image from "next/image";
 import Link from "next/link";
+import { formatNaira } from "../utils/formatter";
 
 function ProductsGrid({
   filteredProducts,
@@ -77,7 +77,7 @@ function ProductsGrid({
               {/* FOOTER */}
               <div className="mt-auto">
                 <div className="text-xl font-bold text-green-600 mb-4">
-                  {formatPrice(product.price)}
+                  {formatNaira(product.price)}
                 </div>
 
                 {qty === 0 ? (

@@ -1,11 +1,11 @@
 "use client";
 
-import { COMPANIES } from "@/src/constants/systemConfigs";
 import Image from "next/image";
+import partners from "../constants/partners";
 
 export default function AboutTrusted() {
   return (
-    <section className="w-full py-16 px-6 md:px-16 bg-white">
+    <section className="w-full py-10 md:py-12 px-6 md:px-16 bg-zinc-100">
       <div className="max-w-6xl mx-auto text-center">
         {/* HEADING */}
         <p className="text-lg text-zinc-500 font-medium tracking-tight">
@@ -14,7 +14,7 @@ export default function AboutTrusted() {
 
         {/* LOGOS */}
         <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-10 place-items-center">
-          {COMPANIES.map((company, index) => (
+          {partners.map((company, index) => (
             <div
               data-scroll-reveal
               animate-on-scroll={"true"}

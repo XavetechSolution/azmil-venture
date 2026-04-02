@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Product } from "../constants/products";
-import { formatPrice } from "../utils/formatPrice";
+import { formatNaira } from "../utils/formatter";
 
 export interface CartItem {
   id: number;
@@ -32,13 +32,13 @@ ${cart
     (item, index) =>
       `${index + 1}. *${item.product.name}*
    - Qty: ${item.qty}
-   - Price: ${formatPrice(item.product.price)}
-   - Subtotal: ${formatPrice(item.product.price * item.qty)}`,
+   - Price: ${formatNaira(item.product.price)}
+   - Subtotal: ${formatNaira(item.product.price * item.qty)}`,
   )
   .join("\n\n")}
 
 ----------------------------
-*TOTAL: ${formatPrice(total)}*
+*TOTAL: ${formatNaira(total)}*
 ----------------------------
 
 Kindly provide:
@@ -109,7 +109,7 @@ Thank you!`;
                   {item.product.name}
                 </h4>
                 <p className="text-sm text-gray-600">
-                  {formatPrice(item.product.price)} each
+                  {formatNaira(item.product.price)} each
                 </p>
               </div>
               <div className="flex items-center gap-2">
@@ -135,7 +135,7 @@ Thank you!`;
         <div className="p-6 border-t bg-gray-50">
           <div className="text-right mb-6">
             <div className="text-2xl font-bold text-gray-900">
-              {formatPrice(total)}
+              {formatNaira(total)}
             </div>
           </div>
           <div className="space-y-3">

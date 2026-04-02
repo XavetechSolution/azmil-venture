@@ -1,77 +1,62 @@
 import { Battery, Gauge, MessageCircle, Sun, Wallet, Zap } from "lucide-react";
 import Link from "next/link";
 import {
-  BATTERY_MAPPING,
-  PANEL_MAPPING,
+  BATTERY,
+  MAX_VA_THRESHOLD,
   POWER_FACTOR,
-  VA_STEPS,
+  SOLAR_PRICE,
 } from "../constants/systemConfigs";
-import useAppContext from "../hooks/useAppContext";
+import {
+  findBestBatteryCombination,
+  findBestInverterCombination,
+  findBestPanelQuantity,
+} from "../utils/estimate";
+import { formatNaira, formatVA, formatWH } from "../utils/formatter";
 
-const estimateVA = (va: number): number => {
-  if (va <= 0) return 0;
-  const found = VA_STEPS.find((step) => va <= step);
-  return found ?? VA_STEPS[VA_STEPS.length - 1];
-};
+import { useState } from "react";
+import useAppContext from "../hooks/useAppContext";
+import generateRecommendationMessage from "../utils/generateRecommendationMessage";
+import RecommendedCostBreakDown from "./RecommendedCostBreakDown";
 
 function RecommendedSystemGrid() {
   const { state } = useAppContext();
+  const [showBreakdown, setShowBreakdown] = useState(false);
 
   const va =
     state.config.systemType === "offgrid"
       ? (state.energy.totalWatt / POWER_FACTOR) * 2
       : state.energy.totalWatt / POWER_FACTOR;
 
-  const inverterVA = estimateVA(va);
-
-  // check if user exceeds supported range
-  const isAboveRange = va > VA_STEPS[VA_STEPS.length - 1];
-
-  // display format
-  const inverterDisplay = isAboveRange
-    ? `${VA_STEPS[VA_STEPS.length - 1] / 1000}KVA+`
-    : inverterVA >= 1000
-      ? `${inverterVA / 1000}KVA`
-      : `${inverterVA}VA`;
-
   const wattHour = state.energy.totalWatt * state.config.dailyUsage;
   const KWhDisplay =
     wattHour >= 1000 ? `${(wattHour / 1000).toFixed(2)}KWh` : `${wattHour}Wh`;
 
-  const appliancesList = state.appliances?.length
-    ? state.appliances
-        .filter((item) => Number(item.power) * Number(item.quantity) > 0)
-        .map((item) => `- ${item.name} (× ${item.quantity})`)
-        .join("\n")
-    : "No appliances specified";
+  const batterySize =
+    wattHour / (BATTERY.lithium.dod * BATTERY.lithium.efficiency);
 
-  const message = `Hello, I would like a solar system quote.
+  const recommendedInverters = findBestInverterCombination(va);
+  const recommendedBatteries = findBestBatteryCombination(batterySize);
 
-Details: 
-- Name: ${state.user.name}
-- Email: ${state.user.email}
-- Address: ${state.user.address}
+  // Solar Panel Estimation
+  const solarQuantity = findBestPanelQuantity(
+    recommendedInverters.va,
+    recommendedBatteries.count,
+  );
+  const solarPrice = SOLAR_PRICE * solarQuantity;
 
-Here are my Appliances and Estimated requirements:
+  const isAboveRange = va > MAX_VA_THRESHOLD;
 
-Appliances ⚡:
-${appliancesList}
+  const message = generateRecommendationMessage({
+    state,
+    recommendedBatteries,
+    recommendedInverters,
+    KWhDisplay,
+    solarQuantity,
+  });
 
-Estimated Requirements 📝:
-- Inverter: ${inverterDisplay}
-- Solar Panels: ${PANEL_MAPPING[inverterVA] ?? 0}
-- Battery Bank: ${BATTERY_MAPPING[inverterVA] ?? 0}
-- Daily Energy: ${KWhDisplay}
-
-Config ⚙:
-- System Type: ${state.config.systemType === "ongrid" ? "On-Grid" : "Off-Grid"}
-- Battery Type: ${state.config.batteryType === "lithium" ? state.config.batteryType + " Battery" : state.config.batteryType + " Cell"}
-- Daily Usage: ${state.config.dailyUsage} hr(s)
-
-Please provide a formal quote. Thank you.
-`;
   const encodedMessage = encodeURIComponent(message);
   const whatsappLink = `https://wa.me/2348134936101?text=${encodedMessage}`;
+
   return (
     <div className="w-full">
       {/* Header */}
@@ -89,26 +74,36 @@ Please provide a formal quote. Thank you.
         {/* Solar Panels */}
         <div className="bg-zinc-50 rounded-xl p-5 text-center shadow-sm hover:shadow-lg transition">
           <Sun className="mx-auto text-yellow-500 mb-2" size={28} />
-          <p className="text-2xl font-bold text-zinc-800">
-            {PANEL_MAPPING[inverterVA] ?? 0}
-          </p>
-          <p className="text-sm text-zinc-500">Solar Panels (500W - 700W)</p>
+          <p className="text-2xl font-bold text-zinc-800">{solarQuantity}</p>
+          <p className="text-sm text-zinc-500">Solar Panels (700W)</p>
         </div>
 
         {/* Inverter */}
         <div className="bg-zinc-50 rounded-xl p-5 text-center shadow-sm hover:shadow-lg transition">
           <Zap className="mx-auto text-blue-500 mb-2" size={28} />
-          <p className="text-2xl font-bold text-zinc-800">{inverterDisplay}</p>
-          <p className="text-sm text-zinc-500">Inverter</p>
+          <p className="text-2xl font-bold text-zinc-800">
+            {formatVA(recommendedInverters.va)}
+          </p>
+          <p className="text-sm text-zinc-500">
+            Inverter{" "}
+            {recommendedInverters.va > 1
+              ? ` (x${recommendedInverters.count})`
+              : ""}
+          </p>
         </div>
 
         {/* Battery */}
         <div className="bg-zinc-50 rounded-xl p-5 text-center shadow-sm hover:shadow-lg transition">
           <Battery className="mx-auto text-green-500 mb-2" size={28} />
           <p className="text-2xl font-bold text-zinc-800">
-            {BATTERY_MAPPING[inverterVA] ?? 0}
+            {formatWH(recommendedBatteries.batteryWh)}
           </p>
-          <p className="text-sm text-zinc-500">Battery Bank (KWh)</p>
+          <p className="text-sm text-zinc-500">
+            Battery
+            {recommendedBatteries.count > 1
+              ? ` (x${recommendedBatteries.count})`
+              : ""}
+          </p>
         </div>
 
         {/* Daily Energy */}
@@ -128,15 +123,27 @@ Please provide a formal quote. Thank you.
         <p className="text-sm text-white/80">Estimated System Cost</p>
 
         <p className="text-3xl font-bold text-white mt-1">
-          ₦xxx,xxx – ₦x,xxx,xxx
+          {formatNaira(
+            recommendedBatteries.totalPrice +
+              recommendedInverters.totalPrice +
+              solarPrice,
+          )}
         </p>
       </div>
 
-      {/* Large Solar System Notice */}
+      {/* Breakdown */}
+      <RecommendedCostBreakDown
+        setShowBreakdown={setShowBreakdown}
+        showBreakdown={showBreakdown}
+        recommendedBatteries={recommendedBatteries}
+        recommendedInverters={recommendedInverters}
+        solarPrice={solarPrice}
+        solarQuantity={solarQuantity}
+      />
+
       {isAboveRange && (
         <p className="text-center text-sm text-zinc-600 mb-6">
-          Larger appliances or systems above this size require a custom setup.
-          Please consult us on WhatsApp for a tailored solution.
+          Larger systems require a custom setup. Please contact us on WhatsApp.
         </p>
       )}
 
@@ -146,7 +153,6 @@ Please provide a formal quote. Thank you.
           text-white font-semibold py-3 rounded-xl transition shadow-md"
         href={whatsappLink}
         target="_blank"
-        rel="noopener noreferrer"
       >
         <MessageCircle size={18} />
         Get Formal Quote on WhatsApp
