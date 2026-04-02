@@ -10,59 +10,6 @@ export const estimateVA = (va: number): number => {
   return found ?? VA_STEPS[VA_STEPS.length - 1];
 };
 
-export const estimateInverterCost = (
-  va: number,
-): { wh: number; price: number; volt: number } => {
-  if (va <= 0) return { wh: 0, price: 0, volt: 0 };
-  const k = Object.keys(INVERTER_VA_TO_COST);
-  const found = k.find((step) => va <= Number(step));
-  console.log("wh is: ", va, "found: ", found);
-  if (found) {
-    return { wh: found, ...INVERTER_VA_TO_COST[Number(found)] };
-  } else {
-    return {
-      wh: k[k.length - 1],
-      ...INVERTER_VA_TO_COST[Number(k[k.length - 1])],
-    };
-  }
-};
-
-export const estimateBatteryCost = (
-  wh: number,
-): { wh: number; price: number; volt: number }[] => {
-  if (wh <= 0) return [];
-
-  const steps = Object.keys(BATTERY_Wh_TO_COST)
-    .map(Number)
-    .sort((a, b) => a - b); // ascending
-
-  const maxStep = steps[steps.length - 1];
-  const result: { wh: number; price: number; volt: number }[] = [];
-
-  let remaining = wh;
-
-  // Use as many max units as possible
-  while (remaining > maxStep) {
-    result.push({
-      wh: maxStep,
-      ...BATTERY_Wh_TO_COST[maxStep],
-    });
-    remaining -= maxStep;
-  }
-
-  //round UP to the nearest available step
-  const found = steps.find((step) => step >= remaining);
-
-  if (found) {
-    result.push({
-      wh: found,
-      ...BATTERY_Wh_TO_COST[found],
-    });
-  }
-
-  return result;
-};
-
 type Battery = {
   price: number;
   volt: number;
@@ -148,4 +95,57 @@ export function findBestBatteryCombination(requiredWh: number) {
   }
 
   return bestOption;
+}
+
+interface BestOption {
+  va: number;
+  count: number;
+  totalVa: number;
+  totalPrice: number;
+  volt: any;
+}
+
+export function findBestInverterCombination(requiredVa: number) {
+  let bestOption: any = null;
+
+  for (const [whStr, data] of Object.entries(INVERTER_VA_TO_COST)) {
+    const va = Number(whStr);
+
+    const count = Math.ceil(requiredVa / va);
+    const totalVa = count * va;
+    const totalPrice = count * data.price;
+
+    const candidate = {
+      va: va,
+      count,
+      totalVa,
+      totalPrice,
+      volt: data.volt,
+    };
+
+    if (!bestOption) {
+      bestOption = candidate;
+      continue;
+    }
+
+    // Prefer fewer batteries
+    if (candidate.count < bestOption.count) {
+      bestOption = candidate;
+    }
+    // If same count, prefer less excess Wh
+    else if (
+      candidate.count === bestOption.count &&
+      candidate.totalVa < bestOption.totalVa
+    ) {
+      bestOption = candidate;
+    }
+  }
+
+  return bestOption;
+}
+
+export function findBestPanelQuantity(requiredVa: number, qty = 1) {
+  if (requiredVa * qty <= 0) return 0;
+  if (requiredVa * qty < 1000) return 6;
+  return 4 + 2 * Math.floor(requiredVa / 1000);
 }
