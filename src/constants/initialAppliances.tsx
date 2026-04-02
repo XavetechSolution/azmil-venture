@@ -16,7 +16,7 @@ export interface Appliance {
 const initialAppliances: Appliance[] = [
   {
     name: "Bulb",
-    power: "10", // LED 10W
+    power: "60",
     quantity: "0",
     hrs: "0",
     isSelected: false,
@@ -32,7 +32,7 @@ const initialAppliances: Appliance[] = [
   },
   {
     name: "Sound System",
-    power: "150", // Average stereo ~150W
+    power: "50", // Average stereo ~150W
     quantity: "0",
     hrs: "0",
     isSelected: false,
@@ -40,14 +40,14 @@ const initialAppliances: Appliance[] = [
   },
   {
     name: "LCD/LED TV <42'",
-    power: "80", // 32-40" LED TV
+    power: "150", // 32-40" LED TV
     quantity: "0",
     hrs: "0",
     isSelected: false,
     isEditable: false,
     variation: [
-      { type: "LCD/LED TV <42'", power: "80" },
-      { type: "LCD/LED TV >42'", power: "150" },
+      { type: "LCD/LED TV <42'", power: "150" },
+      { type: "LCD/LED TV >42'", power: "200" },
     ],
   },
   {
