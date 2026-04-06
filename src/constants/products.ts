@@ -202,7 +202,7 @@ const PRODUCTS: Product[] = [
     price: 220000,
   },
   {
-    id: 18,
+    id: 19,
     name: "Cworth energy Lithium battery 3.8KWH 12V",
     category: "batteries",
     image: "/cworth li 104.jpg",
@@ -212,7 +212,7 @@ const PRODUCTS: Product[] = [
     price: 590000,
   },
   {
-    id: 19,
+    id: 20,
     name: "Felicity Solar Lithium battery",
     category: "batteries",
     image: "/FELICITYLI 106.jpg",
@@ -226,7 +226,7 @@ const PRODUCTS: Product[] = [
     price: 2400000,
   },
   {
-    id: 20,
+    id: 21,
     name: "Cworth energy Lithium battery 20KWH 51.2V",
     category: "batteries",
     image: "/cworth li 104.jpg",
@@ -240,7 +240,7 @@ const PRODUCTS: Product[] = [
     price: 2900000,
   },
   {
-    id: 21,
+    id: 22,
     name: "Felicity Solar Inverter 10Kva 48V",
     category: "inverters",
     image: "/FELICITYIN 106.jpg",
@@ -254,7 +254,7 @@ const PRODUCTS: Product[] = [
     price: 1234000,
   },
   {
-    id: 22,
+    id: 23,
     name: "Cworth energy 12KVA Inverter 48V",
     category: "inverters",
     image: "/CWORTH inverter 108.jpg",
@@ -263,7 +263,7 @@ const PRODUCTS: Product[] = [
     price: 1350000,
   },
   {
-    id: 23,
+    id: 24,
     name: "SOLAR GENERATOR 1500WH SOLAR GENERATOR",
     category: "packages",
     image: "/itelsolargen103.jpg",
