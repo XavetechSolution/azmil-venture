@@ -11,9 +11,18 @@ function Header() {
         aria-label="Global"
         className="flex items-center justify-between p-6 lg:px-8"
       >
-        <div className="flex lg:flex-1">
-          <a href="/" className="-m-1.5 p-1.5">
+        <div className="flex lg:flex-1 items-center gap-3">
+          <a href="/" className="-m-1.5 p-1.5 flex items-center gap-3">
             <img src="/logo3.png" alt="logo" className="lg:h-11 h-8 w-auto" />
+
+            <div className="flex flex-col leading-tight">
+              <span className="text-white font-bold text-sm lg:text-base">
+                AZ Multiventure
+              </span>
+              <span className="text-gray-400 font-bold text-xs lg:text-sm">
+                Intercontinental Limited
+              </span>
+            </div>
           </a>
         </div>
 
