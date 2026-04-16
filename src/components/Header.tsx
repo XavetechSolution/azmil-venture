@@ -19,7 +19,7 @@ function Header() {
               <span className="text-white font-bold text-sm lg:text-base">
                 AZ Multiventure
               </span>
-              <span className="text-gray-400 font-bold text-xs lg:text-sm">
+              <span className="text-sm text-gray-400 leading-tight">
                 Intercontinental Limited
               </span>
             </div>

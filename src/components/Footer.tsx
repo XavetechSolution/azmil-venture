@@ -14,22 +14,29 @@ export default function Footer() {
     <footer className="bg-gray-900 text-white">
       <div className="py-16 px-4 md:px-16">
         <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
-          {/* Brand (NOT centered on mobile) */}
-          <div className="text-left">
-            <Image
-              src="/logo3.png"
-              alt="AZMIL"
-              width={100}
-              height={50}
-              className="mb-6"
-            />
-            <p className="text-gray-400 leading-relaxed mb-8 max-w-sm">
+          {/* Brand Section */}
+          <div className="text-center md:text-left">
+            {/* Logo + Name */}
+            <div className="flex flex-col md:flex-row items-center md:items-center gap-3 mb-6">
+              <Image src="/logo3.png" alt="AZMIL" width={100} height={50} />
+
+              <div className="text-center md:text-left">
+                <p className="font-semibold text-lg leading-tight">
+                  AZ Multiventure
+                </p>
+                <p className="text-sm text-gray-400 leading-tight">
+                  Intercontinental Limited
+                </p>
+              </div>
+            </div>
+
+            <p className="text-gray-400 leading-relaxed mb-8 max-w-sm mx-auto md:mx-0">
               AZMIL provides premium solar solutions for Nigerian homes and
               businesses. Reliable power, unbeatable warranties, lifetime
               support. Power your future today.
             </p>
 
-            <div className="flex gap-4">
+            <div className="flex justify-center md:justify-start gap-4">
               <Link
                 href="#"
                 className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-white hover:text-gray-900 transition"
@@ -45,7 +52,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Navigation (centered on mobile) */}
+          {/* Navigation */}
           <div className="text-center md:text-left">
             <h4 className="text-xl font-bold mb-6">Navigation</h4>
             <ul className="space-y-3">
@@ -155,10 +162,10 @@ export default function Footer() {
         {/* Bottom */}
         <div className="border-t border-gray-800 pt-8 mt-12 text-center text-gray-500">
           <p>
-            &copy; {new Date().getFullYear()} AZMIL Solar Solutions. All rights
-            reserved. Years Warranty | 24/7 Lifetime Support | Nigeria&apos;s
-            Most Trusted Solar Brand.
+            &copy; {new Date().getFullYear()} AZ Multiventure Intercontinental
+            Limited. All rights reserved.
           </p>
+          <p>Nigeria&apos;s Most Trusted Solar Brand.</p>
         </div>
       </div>
     </footer>
