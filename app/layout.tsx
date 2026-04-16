@@ -1,9 +1,9 @@
 import Footer from "@/src/components/Footer";
 import Header from "@/src/components/Header";
 import { AppProvider } from "@/src/store/AppProvider";
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -88,6 +88,7 @@ export default function RootLayout({
         <AppProvider>
           <Header />
           {children}
+          <Analytics />
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{
