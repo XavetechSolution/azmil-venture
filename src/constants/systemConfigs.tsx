@@ -23,7 +23,7 @@ export const BATTERY_Wh_TO_COST: BatteryMap = {
 };
 
 export const BATTERY = {
-  lithium: { dod: 0.9, efficiency: 0.95 },
+  lithium: { dod: 1, efficiency: 1.1 },
   wet: { dod: 0.5, efficiency: 0.8 },
   dry: { dod: 0.6, efficiency: 0.85 },
 };
